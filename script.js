@@ -1,4 +1,3 @@
-//your JS code here. If required.
 
 let age= document.querySelector("#age")
 let name=document.querySelector("#name")
