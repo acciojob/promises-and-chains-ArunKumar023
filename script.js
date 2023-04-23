@@ -1,23 +1,38 @@
+const form = document.querySelector('form');
+const ageInput = document.querySelector('#age');
+const nameInput = document.querySelector('#name');
+const submitBtn = document.querySelector('#btn');
 
-let age= document.querySelector("#age")
-let name=document.querySelector("#name")
-let btn=document.querySelector("#btn")
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // prevent default form submission behavior
+  
+  // validate inputs
+  if (ageInput.value.trim() === '' || nameInput.value.trim() === '') {
+    alert('Please fill in all fields');
+    return;
+  }
 
-let p= new Promise(function(resolve, reject){
-    setInterval(function(){
-        let age1=age.ariaValueMax;
-        let name1=name.value;
+  // create promise
+  const agePromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const age = parseInt(ageInput.value);
+      if (age >= 18) {
+        resolve();
+      } else {
+        reject();
+      }
+    }, 4000);
+  });
 
-        if(age1>18){
-            alert(`Welcome,${name1}. You can vote`)
-        }
-        else{
-            alert(`Oh sorry ${name1}. You aren't old enough`)
-        }
+  // handle promise resolution/rejection
+  agePromise
+    .then(() => {
+      alert(`Welcome, ${nameInput.value}. You can vote.`);
+    })
+    .catch(() => {
+      alert(`Oh sorry ${nameInput.value}. You aren't old enough.`);
+    });
 
-    },4000)
-})
-
-btn.addEventListener('click', function(){
-    return p
-})
+  // reset form
+  form.reset();
+});
