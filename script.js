@@ -1,38 +1,39 @@
-const form = document.querySelector('form');
-const ageInput = document.querySelector('#age');
-const nameInput = document.querySelector('#name');
-const submitBtn = document.querySelector('#btn');
+let userDetails = document.querrySelector('form');
+const form = document.querySelector('#myForm');
+const name = document.querySelector('#name');
+const age = document.querySelector('#age');
+const btn = document.querySelector('#btn');
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault(); // prevent default form submission behavior
-  
-  // validate inputs
-  if (ageInput.value.trim() === '' || nameInput.value.trim() === '') {
-    alert('Please fill in all fields');
-    return;
-  }
+userDetails.addEventListener('onsubmit', promiseResolve);
+form.addEventListener('onsubmit', (event) => {
+	event.preventDefault();
 
-  // create promise
-  const agePromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const age = parseInt(ageInput.value);
-      if (age >= 18) {
-        resolve();
-      } else {
-        reject();
-      }
-    }, 4000);
-  });
+	if(name.value === '' || age.value === '') {
+		alert('Please fill out all fiels.');
+		return;
+	}
 
-  // handle promise resolution/rejection
-  agePromise
-    .then(() => {
-      alert(`Welcome, ${nameInput.value}. You can vote.`);
-    })
-    .catch(() => {
-      alert(`Oh sorry ${nameInput.value}. You aren't old enough.`);
-    });
+function promiseResolve(event){
+	return new Promise((resolve, reject) => {
+		event.preventDefault();
+	const age = parseInt(age.value);
 
-  // reset form
-  form.reset();
+	const promise = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			if(document.getElementById('age').value >= 18){
+				resolve(alert(`Welcome, ${document.getElementById('name').value}. You can vote.`));
+			}
+			resolve(alert(`Welcome, ${document.getElementById('name').value}. You aren't old enough.`));
+			if(age >= 18) resolve();
+			reject();
+		}, 4 * 1000);
+	});
+}
+
+	promise.then(() => {
+		alert(`Welcome, ${name.value}. You can vote.`);
+	})
+	.catch(() => {
+		alert(`Welcome, ${name.value}. You aren't old enough.`);
+	});
 });
