@@ -1,25 +1,24 @@
-required.
-const nameInput = document.getElementById('name');
-const ageInput = document.getElementById('age');
-const submitBtn = document.getElementById('btn');
-
-submitBtn.addEventListener('click', (event) => {
-  event.preventDefault(); 
-  const delayPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Number(ageInput.value) >= 18) {
-        resolve({ name: nameInput.value, age: Number(ageInput.value) });
-      } else {
-        reject({ name: nameInput.value });
-      }
-    }, 4000);
-  });
-
-  delayPromise
-    .then((data) => {
-      alert(`Welcome, ${data.name}. You can vote.`);
+const bttn=document.getElementById('btn');
+bttn.addEventListener("click",callby);
+    function promiseby(age,name){
+      return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+         if(age>=18){
+          resolve("Welcome, ${name}. You can vote.");}
+          else{
+           reject("Oh sorry ${name} You aren't old enough");
+          }
+        },1000)
+      })
+    }
+    function callby(){
+    var age=document.getElementById("age").value;
+    var name=document.getElementById('name').value;
+    promiseby(age,name)
+    .then((data)=>{
+      console.log("Success",data);
     })
-    .catch((error) => {
-      alert(`Oh sorry ${error.name}. You aren't old enough.`);
-    });
-});
+    .catch((data)=>{
+      console.log("error",data);
+    })
+    }
